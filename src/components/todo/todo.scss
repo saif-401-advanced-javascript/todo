@@ -51,6 +51,24 @@ header {
     border-radius: 15px;
   }
 
+  .list {
+    margin-left: 150px;
+    #remove-padding {
+      width: 500px;
+      padding: 15px;
+    }
+    button {
+      color: #fff;
+      background-color: green;
+      &.complete-true {
+        background-color: red;
+        &:hover {
+          background: darken($color: red, $amount: 5%);
+        }
+      }
+    }
+  }
+
   ul {
     list-style-type: none;
     margin-left: 100px;
@@ -62,7 +80,6 @@ header {
       display: flex;
       flex-direction: row;
       font-size: 0.75em;
-      //   margin: 0.75em 0.5em;
 
       &.complete-true {
         span {

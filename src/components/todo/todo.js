@@ -6,6 +6,7 @@ import './todo.scss';
 
 export default function ToDo() {
   const [list, setList] = useState([]);
+  const [edit, setEdit] = useState({});
 
   const addItem = (item) => {
     item._id = Math.random();
@@ -63,6 +64,18 @@ export default function ToDo() {
     ];
     setList(list);
   }, []);
+  const deleteItem = (itemId) => {
+    let deletedList = list.filter((item) => item._id !== itemId);
+    setList(deletedList);
+  };
+
+  const editItem = (item) => {
+    setEdit(item);
+  };
+
+  const editList = (data) => {
+    console.log(data);
+  };
   return (
     <>
       <header>
@@ -73,11 +86,20 @@ export default function ToDo() {
       </header>
       <section className='todo'>
         <div>
-          <TodoForm propHandleSubmit={addItem} />
+          <TodoForm
+            edit={edit}
+            propHandleSubmit={addItem}
+            propHandleEdit={editList}
+          />
         </div>
 
         <div>
-          <TodoList list={list} handleComplete={toggleComplete} />
+          <TodoList
+            list={list}
+            handleComplete={toggleComplete}
+            handelDelete={deleteItem}
+            handleEdit={editItem}
+          />
         </div>
       </section>
     </>

@@ -10,7 +10,6 @@ export default function ToDo() {
   const addItem = (item) => {
     item._id = Math.random();
     item.complete = false;
-    console.log('item here', item);
     setList([...list, item]);
   };
   const toggleComplete = (id) => {
@@ -68,7 +67,7 @@ export default function ToDo() {
     <>
       <header>
         <h2>
-          There are {list.filter((item) => !item.complete).length} Items To
+          There are ({list.filter((item) => !item.complete).length}) Items To
           Complete
         </h2>
       </header>

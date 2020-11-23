@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import BForm from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 function Form(props) {
   const { propHandleSubmit } = props;
@@ -15,20 +17,20 @@ function Form(props) {
     setItem({});
   };
   return (
-    <>
+    <section className='form'>
       <h3>Add Item</h3>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <span>To Do Item</span>
-          <input
+      <BForm onSubmit={handleSubmit}>
+        <BForm.Group controlId='exampleForm.ControlInput1'>
+          <BForm.Label>To Do Item</BForm.Label>
+          <BForm.Control
             name='text'
             placeholder='Add To Do List Item'
             onChange={handleInputChange}
           />
-        </label>
-        <label>
-          <span>Difficulty Rating</span>
-          <input
+        </BForm.Group>
+        <BForm.Group controlId='formBasicRange'>
+          <BForm.Label>Difficulty Rating</BForm.Label>
+          <BForm.Control
             defaultValue='1'
             type='range'
             min='1'
@@ -36,19 +38,21 @@ function Form(props) {
             name='difficulty'
             onChange={handleInputChange}
           />
-        </label>
-        <label>
-          <span>Assigned To</span>
-          <input
+        </BForm.Group>
+        <BForm.Group controlId='exampleForm.ControlInput1'>
+          <BForm.Label>Assigned To</BForm.Label>
+          <BForm.Control
             type='text'
             name='assignee'
             placeholder='Assigned To'
             onChange={handleInputChange}
           />
-        </label>
-        <button>Add Item</button>
-      </form>
-    </>
+        </BForm.Group>
+        <Button variant='primary' type='submit'>
+          Add Item
+        </Button>
+      </BForm>
+    </section>
   );
 }
 

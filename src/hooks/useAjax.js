@@ -49,10 +49,22 @@ function useAjax(URL, cb, list) {
         .catch(console.error);
     }
   };
+
+  const deleteItem = (itemId) => {
+    let url = `${URL}/${itemId}`;
+    axios({
+      url: url,
+      method: 'delete'
+    }).then((res) => {
+      let items = list.filter((item) => item._id !== itemId);
+      cb(items);
+    });
+  };
   return {
     getItems: getTodoItems,
     addItem: addItem,
-    toggleComplete: toggleComplete
+    toggleComplete: toggleComplete,
+    deleteItem: deleteItem
   };
 }
 

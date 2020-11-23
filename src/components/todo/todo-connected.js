@@ -9,7 +9,11 @@ const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
 
 const ToDo = () => {
   const [list, setList] = useState([]);
-  const { getItems, addItem, toggleComplete } = useAjax(todoAPI, setList, list);
+  const { getItems, addItem, toggleComplete, deleteItem } = useAjax(
+    todoAPI,
+    setList,
+    list
+  );
 
   useEffect(() => {
     getItems();
@@ -30,7 +34,11 @@ const ToDo = () => {
         </div>
 
         <div>
-          <TodoList list={list} handleComplete={toggleComplete} />
+          <TodoList
+            list={list}
+            handleComplete={toggleComplete}
+            handelDelete={deleteItem}
+          />
         </div>
       </section>
     </>

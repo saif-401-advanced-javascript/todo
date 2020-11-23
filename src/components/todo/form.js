@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import BForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { If, Then, Else } from '../if';
 import useForm from '../../hooks/useForm';
 
 function Form(props) {
   const { propHandleSubmit } = props;
 
-  const [value, handleSubmit, handleInputChange] = useForm(propHandleSubmit);
+  const [handleSubmit, handleInputChange] = useForm(propHandleSubmit);
 
   return (
     <section className='form'>

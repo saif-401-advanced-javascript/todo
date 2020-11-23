@@ -13,7 +13,7 @@ const useForm = (cb) => {
     setItem({ ...item, [e.target.name]: e.target.value });
   };
 
-  return [item, handleSubmit, handleInputChange];
+  return [handleSubmit, handleInputChange];
 };
 
 export default useForm;

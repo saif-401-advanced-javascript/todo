@@ -1,11 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Toast from 'react-bootstrap/Toast';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { SettingContext } from '../../context/setting';
 
 function TodoList(props) {
-  const { list, handleComplete, handelDelete } = props;
+  let { list, handleComplete, handelDelete } = props;
+  const { isDisplayed } = useContext(SettingContext);
+  if (!isDisplayed) {
+    list = list.filter((item) => !item.complete);
+  }
   useEffect(() => {});
   return (
     <section className='list'>

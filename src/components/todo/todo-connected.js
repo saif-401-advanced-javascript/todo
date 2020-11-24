@@ -5,6 +5,7 @@ import useAjax from '../../hooks/useAjax';
 import usePagination from '../../hooks/usePagintaion.js';
 import { SettingContext } from '../../context/setting.js';
 import Pages from '../pagination/pagination.js';
+import Setting from '../setting/setting-editor.js';
 
 import './todo.scss';
 
@@ -29,16 +30,13 @@ const ToDo = (props) => {
   useEffect(() => {
     getItems();
     defaultPage();
-    console.log('YESSSS');
   }, []);
 
   useEffect(() => {
     getItemsP(siteContext.numberOfItems, page);
-    console.log('page has been Updated');
   }, [page]);
 
   useEffect(() => {
-    console.log('total has been Updated', total);
     getItemsP(siteContext.numberOfItems, page);
   }, [total]);
 
@@ -63,6 +61,9 @@ const ToDo = (props) => {
             handelDelete={deleteItem}
           />
           <Pages page={page} changePage={setPage} list={total} />
+        </div>
+        <div id='setting'>
+          <Setting />
         </div>
       </section>
     </>

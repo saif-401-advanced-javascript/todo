@@ -7,7 +7,7 @@ import { SettingContext } from '../../context/setting';
 
 function TodoList(props) {
   let { list, handleComplete, handelDelete } = props;
-  const { isDisplayed, sorted } = useContext(SettingContext);
+  const { isDisplayed } = useContext(SettingContext);
   if (!isDisplayed) {
     list = list.filter((item) => !item.complete);
   }

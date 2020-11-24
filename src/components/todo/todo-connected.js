@@ -1,29 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
 import useAjax from '../../hooks/useAjax';
+import { SettingContext } from '../../context/setting.js';
+import Pages from '../pagination/pagination.js';
 
 import './todo.scss';
 
 const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
 
-const ToDo = () => {
+const ToDo = (props) => {
   const [list, setList] = useState([]);
-  const { getItems, addItem, toggleComplete, deleteItem } = useAjax(
+  const [total, setTotal] = useState([]);
+  const [page, setPage] = useState(1);
+  const [active, setActive] = useState(1);
+  const { toggleComplete, deleteItem, getItemsP } = useAjax(
     todoAPI,
     setList,
     list
   );
+  const { getItems, addItem } = useAjax(todoAPI, setTotal, total);
+
+  const siteContext = useContext(SettingContext);
 
   useEffect(() => {
     getItems();
-  }, [getItems]);
+  }, [list]);
+
+  useEffect(() => {
+    getItemsP(siteContext.numberOfItems, page);
+  }, [page]);
 
   return (
     <>
       <header>
         <h2>
-          There are {list.filter((item) => !item.complete).length} Items To
+          There are {total.filter((item) => !item.complete).length} Items To
           Complete
         </h2>
       </header>
@@ -38,6 +50,13 @@ const ToDo = () => {
             list={list}
             handleComplete={toggleComplete}
             handelDelete={deleteItem}
+          />
+          <Pages
+            page={page}
+            changePage={setPage}
+            list={total}
+            active={active}
+            changeActive={setActive}
           />
         </div>
       </section>

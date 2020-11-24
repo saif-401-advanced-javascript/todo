@@ -13,6 +13,23 @@ function useAjax(URL, cb, list) {
       .catch(console.error);
   };
 
+  const getItemsP = (number, page) => {
+    let begin = (page - 1) * number;
+    number = page * number;
+    axios({
+      url: URL,
+      method: 'get',
+      mode: 'core'
+    })
+      .then((res) => {
+        let requiredItems = res.data.results.slice(begin, number);
+        // console.log(res.data.results);
+        // console.log(requiredItems);
+        cb(requiredItems);
+      })
+      .catch(console.error);
+  };
+
   const addItem = (item) => {
     // Set a date for the item
     item.due = new Date();
@@ -63,7 +80,8 @@ function useAjax(URL, cb, list) {
     getItems: getTodoItems,
     addItem: addItem,
     toggleComplete: toggleComplete,
-    deleteItem: deleteItem
+    deleteItem: deleteItem,
+    getItemsP: getItemsP
   };
 }
 

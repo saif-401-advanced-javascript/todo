@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
 import useAjax from '../../hooks/useAjax';
+import usePagination from '../../hooks/usePagintaion.js';
 import { SettingContext } from '../../context/setting.js';
 import Pages from '../pagination/pagination.js';
 
@@ -13,23 +14,33 @@ const ToDo = (props) => {
   const [list, setList] = useState([]);
   const [total, setTotal] = useState([]);
   const [page, setPage] = useState(1);
-  const [active, setActive] = useState(1);
-  const { toggleComplete, deleteItem, getItemsP } = useAjax(
+  const { getItemsP } = usePagination(todoAPI, setList, list);
+  const { getItems, addItem, toggleComplete, deleteItem } = useAjax(
     todoAPI,
-    setList,
-    list
+    setTotal,
+    total
   );
-  const { getItems, addItem } = useAjax(todoAPI, setTotal, total);
 
+  const defaultPage = () => {
+    setPage(1);
+  };
   const siteContext = useContext(SettingContext);
 
   useEffect(() => {
     getItems();
-  }, [list]);
+    defaultPage();
+    console.log('YESSSS');
+  }, []);
 
   useEffect(() => {
     getItemsP(siteContext.numberOfItems, page);
+    console.log('page has been Updated');
   }, [page]);
+
+  useEffect(() => {
+    console.log('total has been Updated', total);
+    getItemsP(siteContext.numberOfItems, page);
+  }, [total]);
 
   return (
     <>
@@ -51,13 +62,7 @@ const ToDo = (props) => {
             handleComplete={toggleComplete}
             handelDelete={deleteItem}
           />
-          <Pages
-            page={page}
-            changePage={setPage}
-            list={total}
-            active={active}
-            changeActive={setActive}
-          />
+          <Pages page={page} changePage={setPage} list={total} />
         </div>
       </section>
     </>

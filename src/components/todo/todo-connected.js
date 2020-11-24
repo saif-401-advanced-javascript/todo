@@ -33,12 +33,22 @@ const ToDo = (props) => {
   }, []);
 
   useEffect(() => {
-    getItemsP(siteContext.numberOfItems, page);
+    getItemsP(siteContext.numberOfItems, page, total);
   }, [page]);
 
   useEffect(() => {
-    getItemsP(siteContext.numberOfItems, page);
+    getItemsP(siteContext.numberOfItems, page, total);
   }, [total]);
+
+  useEffect(() => {
+    if (siteContext.sorted === 'difficulty') {
+      let newTotal = total.sort((a, b) => {
+        return a.difficulty - b.difficulty;
+      });
+      setTotal(newTotal);
+    }
+    getItemsP(siteContext.numberOfItems, page, total);
+  }, [siteContext.sorted]);
 
   return (
     <>

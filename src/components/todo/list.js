@@ -7,7 +7,7 @@ import { SettingContext } from '../../context/setting';
 
 function TodoList(props) {
   let { list, handleComplete, handelDelete } = props;
-  const { isDisplayed } = useContext(SettingContext);
+  const { isDisplayed, sorted } = useContext(SettingContext);
   if (!isDisplayed) {
     list = list.filter((item) => !item.complete);
   }
@@ -35,7 +35,12 @@ function TodoList(props) {
               </Col>
             </Toast.Header>
           </Row>
-          <Toast.Body>{item.text}</Toast.Body>
+          <Toast.Body>
+            <Row>
+              <Col xs={6}>{item.text}</Col>
+              <Col xs={6}>Difficulty {item.difficulty}</Col>
+            </Row>
+          </Toast.Body>
         </Toast>
       ))}
     </section>

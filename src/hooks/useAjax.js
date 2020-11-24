@@ -1,6 +1,10 @@
 import axios from 'axios';
+import { useContext } from 'react';
+import { SettingContext } from '../context/setting';
 
 function useAjax(URL, cb, list) {
+  const { sorted } = useContext(SettingContext);
+
   const getTodoItems = () => {
     axios({
       url: URL,
@@ -22,7 +26,12 @@ function useAjax(URL, cb, list) {
       data: item
     })
       .then((res) => {
-        cb([...list, res.data]);
+        let addingArray = [...list, res.data];
+        console.log(sorted);
+        if (sorted === 'difficulty') {
+          addingArray = addingArray.sort((a, b) => a.difficulty - b.difficulty);
+        }
+        cb(addingArray);
       })
       .catch('This is the errror', console.error);
   };

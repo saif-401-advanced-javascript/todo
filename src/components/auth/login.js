@@ -11,7 +11,6 @@ import Button from 'react-bootstrap/Button';
 
 export default function Login() {
   const siteContext = useContext(LoginContext);
-  console.log(siteContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -31,13 +30,9 @@ export default function Login() {
   return (
     <If condition={siteContext.loggedIn}>
       <Then>
-        <Button variant='outline-success' onClick={siteContext.logout}>
+        <Button variant='outline-danger' onClick={siteContext.logout}>
           Log Out
         </Button>
-        <Form inline>
-          <FormControl type='text' placeholder='Search' className='mr-sm-2' />
-          <Button variant='outline-success'>Search</Button>
-        </Form>
       </Then>
       <Else>
         <Form inline onSubmit={handleSubmit}>

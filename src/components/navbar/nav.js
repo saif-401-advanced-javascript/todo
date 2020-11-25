@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import LoginProvider from '../../context/context';
+// import LoginProvider from '../../context/context';
 import Login from '../auth/login';
 
 function NavBar() {
@@ -12,9 +12,7 @@ function NavBar() {
         <Nav className='mr-auto'>
           <Nav.Link href='#'>Home</Nav.Link>
         </Nav>
-        <LoginProvider>
-          <Login />
-        </LoginProvider>
+        <Login />
       </Navbar>
     </>
   );

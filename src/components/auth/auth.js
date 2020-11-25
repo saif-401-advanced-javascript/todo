@@ -1,16 +1,17 @@
 import React, { useContext } from 'react';
 import { LoginContext } from '../../context/context';
-import { If, Then, Else } from '../if';
+// THIS IS A DEPENDENCY IT IS VARY COOL TO MENTION THAT IN THE FUTURE 💩
+import { If } from 'react-if';
 
-export default function Auth() {
+export default function Auth(props) {
   const siteContext = useContext(LoginContext);
-  let okToRender = false;
+
+  let okToRender;
   try {
     okToRender =
-      siteContext.loggedIn &&
-      (this.props.capability
-        ? siteContext.user.capabilities.includes(this.props.capability)
-        : true);
+      siteContext.loggedIn && props.capability
+        ? siteContext.user.capabilities.includes(props.capability)
+        : false;
   } catch (e) {
     console.warn('Not Authorized');
   }
@@ -22,11 +23,3 @@ export default function Auth() {
     </div>
   );
 }
-
-// <Auth> <div /> </Auth>
-/// are you logged in?
-/// was there no capability specified?
-// <Auth capability="foo"> <div /> </Auth>
-/// are you logged in?
-/// Is there a capability that we care about?
-/// do you have it?

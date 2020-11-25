@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import cookie from 'react-cookies';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -7,13 +8,18 @@ import superagent from 'superagent';
 dotenv.config();
 
 const API = process.env.REACT_APP_API;
-const SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'supersecret';
 
 export const LoginContext = React.createContext();
 
 export default function LoginProvider(props) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const token = cookie.load('auth');
+    validateToken(token);
+  }, []);
 
   const login = async (username, password) => {
     try {
@@ -33,8 +39,10 @@ export default function LoginProvider(props) {
   };
 
   const validateToken = (token) => {
+    console.log('isnide validation', token);
     try {
-      let user = jwt.verify(token, SECRET);
+      console.log(token);
+      let user = jwt.verify(token, JWT_SECRET);
       setLoginState(true, token, user);
     } catch (e) {
       setLoginState(false, null, {});

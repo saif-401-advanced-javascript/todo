@@ -20,6 +20,8 @@ npm run build
 
 ### Deploy
 
+[Deploy Link](https://todoapp-saif.netlify.app/)
+
 # Phases
 
 ## Phase 1

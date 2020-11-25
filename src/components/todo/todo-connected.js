@@ -16,7 +16,7 @@ const ToDo = (props) => {
   const [list, setList] = useState([]);
   const [total, setTotal] = useState([]);
   const [page, setPage] = useState(1);
-  const { getItemsP } = usePagination(todoAPI, setList, list);
+  const { getItemsP } = usePagination(setList, list);
   const { getItems, addItem, toggleComplete, deleteItem } = useAjax(
     todoAPI,
     setTotal,
@@ -44,7 +44,7 @@ const ToDo = (props) => {
   useEffect(() => {
     if (siteContext.sorted === 'difficulty') {
       let newTotal = total.sort((a, b) => {
-        return a.difficulty - b.difficulty;
+        return b.difficulty - a.difficulty;
       });
       setTotal(newTotal);
     }

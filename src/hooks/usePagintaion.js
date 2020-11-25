@@ -1,4 +1,4 @@
-export default function usePagination(URL, cb, list) {
+export default function usePagination(cb, list) {
   const getItemsP = (number, page, total) => {
     let begin = (page - 1) * number;
     number = page * number;

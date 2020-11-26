@@ -7,6 +7,7 @@ import usePagination from '../../hooks/usePagintaion.js';
 import { SettingContext } from '../../context/setting.js';
 import Pages from '../pagination/pagination.js';
 import Setting from '../setting/setting-editor.js';
+import Auth from '../auth/auth.js';
 
 import './todo.scss';
 
@@ -16,7 +17,7 @@ const ToDo = (props) => {
   const [list, setList] = useState([]);
   const [total, setTotal] = useState([]);
   const [page, setPage] = useState(1);
-  const { getItemsP } = usePagination(todoAPI, setList, list);
+  const { getItemsP } = usePagination(setList, list);
   const { getItems, addItem, toggleComplete, deleteItem } = useAjax(
     todoAPI,
     setTotal,
@@ -44,7 +45,7 @@ const ToDo = (props) => {
   useEffect(() => {
     if (siteContext.sorted === 'difficulty') {
       let newTotal = total.sort((a, b) => {
-        return a.difficulty - b.difficulty;
+        return b.difficulty - a.difficulty;
       });
       setTotal(newTotal);
     }
@@ -59,12 +60,12 @@ const ToDo = (props) => {
           Complete
         </h2>
       </header>
-
       <section className='todo'>
-        <div>
-          <TodoForm propHandleSubmit={addItem} />
-        </div>
-
+        <Auth capability='create'>
+          <div>
+            <TodoForm propHandleSubmit={addItem} />
+          </div>
+        </Auth>
         <div>
           <TodoList
             list={list}

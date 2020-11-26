@@ -7,7 +7,8 @@ import superagent from 'superagent';
 
 dotenv.config();
 
-const API = process.env.REACT_APP_API;
+const API =
+  process.env.REACT_APP_API || 'https://auth-server-401.herokuapp.com';
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecret';
 
 export const LoginContext = React.createContext();
@@ -32,6 +33,17 @@ export default function LoginProvider(props) {
     }
   };
 
+  const signup = async (username, password, role, email) => {
+    try {
+      let res = await superagent
+        .post(`${API}/signup`)
+        .send({ username, password, role, email });
+      validateToken(res.body.token);
+    } catch (e) {
+      console.error(e.message);
+    }
+  };
+
   let setLoginState = (loggedIn, token, user) => {
     cookie.save('auth', token);
     setLoggedIn(loggedIn);
@@ -39,9 +51,8 @@ export default function LoginProvider(props) {
   };
 
   const validateToken = (token) => {
-    console.log('isnide validation', token);
     try {
-      console.log(token);
+      console.log('all good', token);
       let user = jwt.verify(token, JWT_SECRET);
       setLoginState(true, token, user);
     } catch (e) {
@@ -56,6 +67,7 @@ export default function LoginProvider(props) {
   const state = {
     login,
     logout,
+    signup,
     user,
     loggedIn
   };

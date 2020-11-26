@@ -34,10 +34,14 @@ export default function LoginProvider(props) {
   };
 
   const signup = async (username, password, role, email) => {
+    let obj = {
+      username: username,
+      password: password,
+      role: role,
+      email: email
+    };
     try {
-      let res = await superagent
-        .post(`${API}/signup`)
-        .send({ username, password, role, email });
+      let res = await superagent.post(`${API}/signup`).send(obj);
       validateToken(res.body.token);
     } catch (e) {
       console.error(e.message);

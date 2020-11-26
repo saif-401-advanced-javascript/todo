@@ -7,7 +7,6 @@ import usePagination from '../../hooks/usePagintaion.js';
 import { SettingContext } from '../../context/setting.js';
 import Pages from '../pagination/pagination.js';
 import Setting from '../setting/setting-editor.js';
-import { LoginContext } from '../../context/context.js';
 import Auth from '../auth/auth.js';
 
 import './todo.scss';
@@ -29,11 +28,6 @@ const ToDo = (props) => {
     setPage(1);
   };
   const siteContext = useContext(SettingContext);
-  const logContext = useContext(LoginContext);
-
-  useEffect(() => {
-    console.log('weeeeee');
-  }, [logContext.loggedIn]);
 
   useEffect(() => {
     getItems();
